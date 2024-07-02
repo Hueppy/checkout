@@ -22,7 +22,7 @@ export function getFetchUrl(settings: IGitSourceSettings): string {
     `!!! URL: ${encodedOwner}/${encodedName} @ ${serviceUrl} => ${url}`
   )
 
-  return url
+  return url.toString()
 }
 
 export function getServerUrl(url?: string): URL {
