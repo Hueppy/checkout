@@ -2440,6 +2440,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isGhes = exports.getServerApiUrl = exports.getServerUrl = exports.getFetchUrl = void 0;
+const core = __importStar(__nccwpck_require__(2186));
 const assert = __importStar(__nccwpck_require__(9491));
 const url_1 = __nccwpck_require__(7310);
 function getFetchUrl(settings) {
@@ -2452,8 +2453,9 @@ function getFetchUrl(settings) {
         const user = settings.sshUser.length > 0 ? settings.sshUser : 'git';
         return `${user}@${serviceUrl.hostname}:${encodedOwner}/${encodedName}.git`;
     }
-    // "origin" is SCHEME://HOSTNAME[:PORT]
-    return `${serviceUrl.origin}/${encodedOwner}/${encodedName}`;
+    const url = new url_1.URL(`${encodedOwner}/${encodedName}`, serviceUrl);
+    core.info(`!!! URL: ${encodedOwner}/${encodedName} @ ${serviceUrl} => ${url}`);
+    return url.toString();
 }
 exports.getFetchUrl = getFetchUrl;
 function getServerUrl(url) {
@@ -2467,7 +2469,7 @@ function getServerApiUrl(url) {
     let apiUrl = 'https://api.github.com';
     if (isGhes(url)) {
         const serverUrl = getServerUrl(url);
-        apiUrl = new url_1.URL(`${serverUrl.origin}/api/v3`).toString();
+        apiUrl = new url_1.URL(`api/v3`, serverUrl).toString();
     }
     return apiUrl;
 }
