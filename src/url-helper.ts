@@ -16,8 +16,7 @@ export function getFetchUrl(settings: IGitSourceSettings): string {
     return `${user}@${serviceUrl.hostname}:${encodedOwner}/${encodedName}.git`
   }
 
-  // "origin" is SCHEME://HOSTNAME[:PORT]
-  return `${serviceUrl.origin}/${encodedOwner}/${encodedName}`
+  return new URL(`${encodedOwner}/${encodedName}`, serviceUrl)
 }
 
 export function getServerUrl(url?: string): URL {
@@ -33,7 +32,7 @@ export function getServerApiUrl(url?: string): string {
 
   if (isGhes(url)) {
     const serverUrl = getServerUrl(url)
-    apiUrl = new URL(`${serverUrl.origin}/api/v3`).toString()
+    apiUrl = new URL(`api/v3`, serverUrl).toString()
   }
 
   return apiUrl
