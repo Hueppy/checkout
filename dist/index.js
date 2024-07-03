@@ -2462,7 +2462,7 @@ function getServerUrl(url) {
     let urlValue = url && url.trim().length > 0
         ? url
         : process.env['GITHUB_SERVER_URL'] || 'https://github.com';
-    return new url_1.URL(urlValue);
+    return new url_1.URL(`${urlValue}/`);
 }
 exports.getServerUrl = getServerUrl;
 function getServerApiUrl(url) {

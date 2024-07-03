@@ -28,7 +28,7 @@ export function getServerUrl(url?: string): URL {
     url && url.trim().length > 0
       ? url
       : process.env['GITHUB_SERVER_URL'] || 'https://github.com'
-  return new URL(urlValue)
+  return new URL(`${urlValue}/`)
 }
 
 export function getServerApiUrl(url?: string): string {
